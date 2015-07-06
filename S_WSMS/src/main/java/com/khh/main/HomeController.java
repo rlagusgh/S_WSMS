@@ -30,7 +30,7 @@ public class HomeController {
 		logger.info("schedule Login");
 		
 		return "SCHEDULE/USER/Login";
-	}
+	} 
 	
 	@RequestMapping(value = "/schedule", method = RequestMethod.GET)
 	public String main(Model model) {
