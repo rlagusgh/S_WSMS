@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.khh.User.Dao.UserMapper">
+	<resultMap type="com.khh.User.Domain.UserVo" id="UserVo">
+		<id property="USER_ID" column="USER_ID" />
+		<result property="USER_NAME" column="USER_NAME" />
+		<result property="USER_PASSWORD" column="USER_PASSWORD" />
+		<result property="USER_EMAIL" column="USER_EMAIL" />
+		<result property="USER_AUTH" column="USER_AUTH" />
+		<result property="JOIN_DATE" column="JOIN_DATE" />
+		<result property="MOD_DATE" column="MOD_DATE" />
+	</resultMap>
+	
+	<select id="getUser" resultMap="UserVo">
+		select * from USERS where USER_ID = #{USER_ID}
+	</select>
+	
+	<select id="getAllUsers" resultMap="UserVo">
+		select * from USERS
+	</select>
+	
+	<insert id="addUser">
+		insert into USERS(USER_ID,USER_NAME,USER_PASSWORD,USER_EMAIL,USER_AUTH,JOIN_DATE,MOD_DATE) values(
+		#{USER_ID},
+		#{USER_NAME},
+		#{USER_PASSWORD},
+		#{USER_EMAIL},
+		#{USER_AUTH},
+		NOW(),
+		NOW()
+		)
+	</insert>
+	
+	<update id="deleteAllUsers">
+		delete from USERS
+	</update>
+	
+	<update id="deleteUser">
+		delete from USERS where USER_ID = #{USER_ID}
+	</update>
+	
+	<select id="getCountAllUsers">
+		select count(*) from USERS
+	</select>
+	
+	<select id="updateUser">
+	</select>
+	
+	<select id="bCheck_id" resultMap="UserVo">
+		select * from USERS where USER_ID = #{USER_ID}
+	</select>
+</mapper>

@@ -1,0 +1,5 @@
+@font-face {font-family: 'UhBeeKOR';src: url('UhBeeKOR.eot');}
+@font-face {font-family: 'UhBeeKOR';src: url('UhBeeKOR.woff') format('woff');}
+article { font-family: "UhBeeKOR", serif;}
+textarea  {font-family: "UhBeeKOR", serif; }
+#title_font {font-family: "UhBeeKOR", serif;}

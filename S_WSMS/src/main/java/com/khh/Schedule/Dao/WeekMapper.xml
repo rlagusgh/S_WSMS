@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.khh.Schedule.Dao.WeekMapper">
+	<resultMap type="com.khh.Schedule.Domain.WeekVo" id="WeekVo">
+		<id property="USER_ID" column="USER_ID" />
+		<result property="TITLE" column="TITLE" />
+		<result property="CONTENTS" column="CONTENTS" />
+		<result property="DAY" column="DAY" />
+		<result property="USER_AUTH" column="USER_AUTH" />
+		<result property="START_TIME" column="START_TIME" />
+		<result property="END_TIME" column="END_TIME" />
+		<result property="ALRAM" column="ALRAM" />
+		<result property="CLASS_ROOM" column="CLASS_ROOM" />
+		<result property="COLOR" column="COLOR" />
+	</resultMap>
+	
+	<select id="getAllWeekSchedule" resultMap="WeekVo">
+		SELECT * FROM WEEK_SCHEDULE WHERE DAY = #{DAY} AND USER_ID = #{USER_ID}
+	</select>
+	
+	<select id="getWeekSchedule" resultMap="WeekVo">
+		SELECT * FROM WEEK_SCHEDULE WHERE DAY=#{DAY} AND START_TIME=#{START_TIME} AND USER_ID=#{USER_ID}
+	</select>
+	
+	<insert id="addWeekSchedule">
+		INSERT INTO WEEK_SCHEDULE(USER_ID,TITLE,CONTENTS,DAY,START_TIME,END_TIME,ALRAM,CLASS_ROOM,COLOR)
+		values(
+		#{USER_ID},
+		#{WEEK.TITLE},
+		#{WEEK.CONTENTS},
+		#{WEEK.DAY},
+		#{WEEK.START_TIME},
+		#{WEEK.END_TIME},
+		1,
+		#{WEEK.CLASS_ROOM},
+		#{WEEK.COLOR}
+		)
+	</insert>
+	
+	<update id="updateSchedule">
+		UPDATE WEEK_SCHEDULE SET TITLE=#{WEEK.TITLE},
+		CONTENTS=#{WEEK.CONTENTS},
+		DAY=#{WEEK.DAY},
+		START_TIME=#{WEEK.START_TIME},
+		END_TIME=#{WEEK.END_TIME},
+		CLASS_ROOM=#{WEEK.CLASS_ROOM},
+		COLOR=#{WEEK.COLOR},
+		ALRAM=1 
+		WHERE USER_ID=#{USER_ID} AND DAY=#{NOW_DAY} AND START_TIME=#{NOW_START_TIME}
+	</update>
+	
+	<delete id="deleteSchedule">
+		DELETE FROM WEEK_SCHEDULE WHERE USER_ID=#{USER_ID} AND START_TIME=#{START_TIME} AND DAY=#{DAY}
+	</delete>
+	
+	<select id="bCheck_schedule" resultType="int">
+		SELECT COUNT(*) FROM WEEK_SCHEDULE WHERE DAY=#{DAY} AND USER_ID=#{USER_ID} AND 
+		 (
+		 START_TIME BETWEEN #{START_TIME} AND 
+		 #{END_TIME} OR END_TIME BETWEEN #{START_TIME} AND #{END_TIME}
+		 )
+	</select>
+	
+	<select id="bCheck_schedule_start" resultType="int">
+		SELECT COUNT(*) FROM WEEK_SCHEDULE WHERE DAY=#{DAY} AND 
+		USER_ID=#{USER_ID} AND END_TIME BETWEEN #{CHECK_TIME} AND #{START_TIME}
+	</select>
+	
+	<select id="bCheck_schedule_end" resultType="int">
+		SELECT COUNT(*) FROM WEEK_SCHEDULE WHERE DAY=#{DAY} AND 
+		USER_ID=#{USER_ID}  
+		AND  
+		START_TIME BETWEEN #{END_TIME} AND #{CHECK_TIME}
+	</select>
+</mapper>
